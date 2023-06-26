@@ -47,17 +47,18 @@ func GetImageHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	var base64Encoding string
 
-	// Determine the content type of the image file
-	mimeType := http.DetectContentType(content)
+	base64Encoding += "data:image/png;base64,"
+	// // Determine the content type of the image file
+	// mimeType := http.DetectContentType(content)
 
-	// Prepend the appropriate URI scheme header depending
-	// on the MIME type
-	switch mimeType {
-	case "image/jpeg":
-		base64Encoding += "data:image/jpeg;base64,"
-	case "image/png":
-		base64Encoding += "data:image/png;base64,"
-	}
+	// // Prepend the appropriate URI scheme header depending
+	// // on the MIME type
+	// switch mimeType {
+	// case "image/jpeg":
+	// 	base64Encoding += "data:image/jpeg;base64,"
+	// case "image/png":
+	// 	base64Encoding += "data:image/png;base64,"
+	// }
 
 	// Append the base64 encoded output
 	base64Encoding += toBase64(content)
@@ -66,8 +67,8 @@ func GetImageHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	// jsonData := []byte(`{"status":` + base64Encoding + `}`)
-	jsonData := []byte(base64Encoding)
-	w.Write(jsonData)
+	jsonData := []byte(`{"status":` + base64Encoding + `}`)
+	w.Write([jsonData,jsonData])
 
 }
 
